@@ -16,7 +16,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.3.1
         env:
-          CIBW_BEFORE_ALL_LINUX: apt-get -y update && apt-get -y install libcfitsio-dev libgsl-dev wget
+          CIBW_BEFORE_ALL_LINUX: apt-get -y update && apt-get -y install libcfitsio-dev libgsl-dev libfftw3-dev wget
           CIBW_BEFORE_BUILD: python -m pip install numpy
           CIBW_BUILD_VERBOSITY: 3
           CIBW_BUILD: "cp3*-*x86_64"
