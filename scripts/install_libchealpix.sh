@@ -13,7 +13,7 @@ unameOut="$(uname -s)"
 echo ${unameOut}
 if [ "${unameOut}" = "Linux" ]
 then
-    [ -e chealpix-3.11.4 ] || wget https://sourceforge.net/projects/healpix/files/Healpix_3.11/autotools_packages/chealpix-3.11.4.tar.gz && tar xzf chealpix-3.11.4.tar.gz
+    [ -e chealpix-3.11.4 ] || wget --no-check-certificate https://sourceforge.net/projects/healpix/files/Healpix_3.11/autotools_packages/chealpix-3.11.4.tar.gz && tar xzf chealpix-3.11.4.tar.gz
 elif [ "${unameOut}" = "Darwin" ]
 then
     [ -e chealpix-3.11.4 ] || curl https://sourceforge.net/projects/healpix/files/Healpix_3.11/autotools_packages/chealpix-3.11.4.tar.gz -L --output chealpix-3.11.4.tar.gz && tar xzf chealpix-3.11.4.tar.gz
