@@ -13,22 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Brew packages
-        if: matrix.os == 'macos-latest'
-        run: |
-          set -x
-          sudo ln -s /usr/local/bin/gfortran-10 /usr/local/bin/gfortran
-          gfortran --version
-          brew install fftw
-
-      - name: Apt packages
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get install libcfitsio-dev libfftw3-dev wget
-
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.3.1
         env:
+          CIBW_BEFORE_ALL_LINUX: "apt-get -y install libcfitsio-dev libfftw3-dev wget"
           CIBW_BEFORE_BUILD: "python -m pip install numpy"
           CIBW_BUILD_VERBOSITY: 3
           CIBW_BUILD: "cp3*-*x86_64"
