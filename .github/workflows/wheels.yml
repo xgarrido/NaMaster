@@ -24,7 +24,7 @@ jobs:
       - name: Apt packages
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo apt-get install libcfitsio-dev libfftw3-dev
+          sudo apt-get install libcfitsio-dev libfftw3-dev wget
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.3.1
