@@ -4,27 +4,31 @@ on: [push, pull_request]
 
 jobs:
   build_wheels:
-    name: Build wheels on ${{ matrix.os }}
+    name: Build wheels on ${{ matrix.os }} for ${{ matrix.cp }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest] #, macos-latest]
+        os:
+          - ubuntu-latest
+          # - macos-latest
+        cp:
+          - cp37
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.3.1
+        uses: pypa/cibuildwheel@v2.12.1
         env:
           CIBW_BEFORE_ALL_LINUX: apt-get -y update && apt-get -y install libcfitsio-dev libgsl-dev libfftw3-dev wget
           CIBW_BEFORE_BUILD: python -m pip install numpy
           CIBW_BUILD_VERBOSITY: 3
-          CIBW_BUILD: "cp3*-*x86_64"
-          CIBW_SKIP: "cp3{5,6}-*"
+          CIBW_BUILD: "${{ matrix.cp }}-*x86_64"
+          CIBW_SKIP: "*-musllinux_*"
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_24
           CIBW_MANYLINUX_I686_IMAGE: manylinux_2_24
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl
           retention-days: 1
@@ -33,9 +37,9 @@ jobs:
     name: Build source distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         name: Install Python
         with:
           python-version: '3.8'
@@ -50,7 +54,7 @@ jobs:
           python -m pip install numpy
           python setup.py sdist
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: dist/*.tar.gz
           retention-days: 1
