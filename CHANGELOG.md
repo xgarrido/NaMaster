@@ -1,3 +1,11 @@
+# v1.5
+- Compilation refactor (#158, #162)
+- Updated installation instructions for NERSC (#160)
+- Ensure correct mask endianness (#161)
+
+# v1.4
+- Option to read only the binned MCM (#151)
+
 # v1.3
 - Spin-0-only covariance workspaces (#147)
 - Added functionality to return field mask (#142)
